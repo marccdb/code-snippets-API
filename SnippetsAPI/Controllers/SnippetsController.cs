@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SnippetsAPI.Data;
@@ -13,14 +14,18 @@ namespace SnippetsAPI.Controllers
     [ApiController]
     public class SnippetsController : ControllerBase
     {
+        private readonly ISnippetRepo _repository;
 
-        private readonly MockSnippetsRepo _mockSnippetsRepo = new MockSnippetsRepo();
+        public SnippetsController(ISnippetRepo repository)
+        {
+            _repository = repository;
+        }
 
         //Get api/snippets
         [HttpGet]
         public ActionResult<IEnumerable<Snippet>> GetAllSnippets()
         {
-            var returnedValue = _mockSnippetsRepo.GetSnippets();
+            var returnedValue = _repository.GetSnippets();
             return Ok(returnedValue);
         }
 
@@ -28,7 +33,7 @@ namespace SnippetsAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult<Snippet> GetSnippetById(int id)
         {
-            var returnedValue = _mockSnippetsRepo.GetSnippetById(id);
+            var returnedValue = _repository.GetSnippetById(id);
             return Ok(returnedValue);
         }
 

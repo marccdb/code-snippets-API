@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SnippetsAPI.Data
 {
-    interface ISnippetRepo
+    public interface ISnippetRepo
     {
         IEnumerable<Snippet> GetSnippets();
         Snippet GetSnippetById(int id);
