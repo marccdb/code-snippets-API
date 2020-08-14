@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.DataProtection.Repositories;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SnippetsAPI.Data;
+using SnippetsAPI.DTOs;
 using SnippetsAPI.Models;
 
 namespace SnippetsAPI.Controllers
@@ -15,10 +12,12 @@ namespace SnippetsAPI.Controllers
     public class SnippetsController : ControllerBase
     {
         private readonly ISnippetRepo _repository;
+        private readonly IMapper _mapper;
 
-        public SnippetsController(ISnippetRepo repository)
+        public SnippetsController(ISnippetRepo repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         //Get api/snippets
@@ -31,10 +30,14 @@ namespace SnippetsAPI.Controllers
 
         //Get api/snippets/{id}
         [HttpGet("{id}")]
-        public ActionResult<Snippet> GetSnippetById(int id)
+        public ActionResult<SnippetReadDto> GetSnippetById(int id)
         {
             var returnedValue = _repository.GetSnippetById(id);
-            return Ok(returnedValue);
+            if (returnedValue != null)
+            {
+                return Ok(_mapper.Map<SnippetReadDto>(returnedValue));
+            }
+            return NotFound();
         }
 
 

@@ -57,5 +57,7 @@ E:\dotNet\SnippetsAPI\SnippetsAPI\bin\Debug\netcoreapp3.1\runtimes\win-x86\nativ
 E:\dotNet\SnippetsAPI\SnippetsAPI\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 E:\dotNet\SnippetsAPI\SnippetsAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 E:\dotNet\SnippetsAPI\SnippetsAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+E:\dotNet\SnippetsAPI\SnippetsAPI\bin\Debug\netcoreapp3.1\AutoMapper.dll
+E:\dotNet\SnippetsAPI\SnippetsAPI\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 E:\dotNet\SnippetsAPI\SnippetsAPI\obj\Debug\netcoreapp3.1\SnippetsAPI.csproj.CoreCompileInputs.cache
 E:\dotNet\SnippetsAPI\SnippetsAPI\obj\Debug\netcoreapp3.1\SnippetsAPI.MvcApplicationPartsAssemblyInfo.cache
