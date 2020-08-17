@@ -24,6 +24,16 @@ namespace SnippetsAPI.Data
             _context.Snippets.Add(snippet);
         }
 
+        public void DeleteSnippet(Snippet snippet)
+        {
+            if (snippet == null)
+            {
+                throw new InvalidDataException("Please insert a valid snippet");
+            }
+            _context.Snippets.Remove(snippet);
+
+        }
+
         public Snippet GetSnippetById(int id)
         {
             return _context.Snippets.FirstOrDefault(x => x.Id == id);

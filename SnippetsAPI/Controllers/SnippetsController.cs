@@ -33,10 +33,10 @@ namespace SnippetsAPI.Controllers
         [HttpGet("{id}", Name = "GetSnippetById")]
         public ActionResult<SnippetReadDto> GetSnippetById(int id)
         {
-            var returnedValue = _repository.GetSnippetById(id);
-            if (returnedValue != null)
+            var checkForValue = _repository.GetSnippetById(id);
+            if (checkForValue != null)
             {
-                return Ok(_mapper.Map<SnippetReadDto>(returnedValue));
+                return Ok(_mapper.Map<SnippetReadDto>(checkForValue));
             }
             return NotFound();
         }
@@ -101,8 +101,22 @@ namespace SnippetsAPI.Controllers
             {
                 return NotFound();
             }
-
         }
+
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteSnippet(int id)
+        {
+            var returnedValue = _repository.GetSnippetById(id);
+            if (returnedValue != null)
+            {
+                _repository.DeleteSnippet(returnedValue);
+                _repository.SaveChanges();
+                return NoContent();
+            }
+            return NotFound();
+        }
+
 
     }
 }

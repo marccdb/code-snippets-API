@@ -11,8 +11,8 @@ namespace SnippetsAPI.Data
         IEnumerable<Snippet> GetSnippets();
         Snippet GetSnippetById(int id);
         void CreateSnippet(Snippet snippet);
-
         void UpdateSnippet(Snippet snippet);
+        void DeleteSnippet(Snippet snippet);
 
     }
 }

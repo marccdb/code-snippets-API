@@ -11,6 +11,11 @@ namespace SnippetsAPI.Data
             throw new NotImplementedException();
         }
 
+        public void DeleteSnippet(Snippet snippet)
+        {
+            throw new NotImplementedException();
+        }
+
         public Snippet GetSnippetById(int id)
         {
             return new Snippet { Id = 1, HowTo = "Fix computers", Line = "Using tools", Platform = "Windows" };
