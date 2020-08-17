@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using SnippetsAPI.Data;
 using SnippetsAPI.DTOs;
@@ -20,7 +21,7 @@ namespace SnippetsAPI.Controllers
             _mapper = mapper;
         }
 
-        //Get api/snippets
+        //GET api/snippets
         [HttpGet]
         public ActionResult<IEnumerable<Snippet>> GetAllSnippets()
         {
@@ -28,7 +29,7 @@ namespace SnippetsAPI.Controllers
             return Ok(returnedValue);
         }
 
-        //Get api/snippets/{id}
+        //GET api/snippets/{id}
         [HttpGet("{id}", Name = "GetSnippetById")]
         public ActionResult<SnippetReadDto> GetSnippetById(int id)
         {
@@ -40,7 +41,7 @@ namespace SnippetsAPI.Controllers
             return NotFound();
         }
 
-        //Post api/snippets
+        //POST api/snippets
         [HttpPost]
         public ActionResult<SnippetReadDto> CreateSnippet(SnippetCreateDto snippetsCreateDto)
         {
@@ -54,19 +55,19 @@ namespace SnippetsAPI.Controllers
 
         }
 
-        // Update-PUT api/snippets/{id}
+        // PUT api/snippets/{id}
         [HttpPut("{id}")]
         public ActionResult<SnippetUpdateDto> UpdateSnippet(int id, SnippetUpdateDto snippetUpdateDto)
         {
             var returnedIdFromRepo = _repository.GetSnippetById(id);
-            if(returnedIdFromRepo != null)
+            if (returnedIdFromRepo != null)
             {
                 _mapper.Map(snippetUpdateDto, returnedIdFromRepo);
                 _repository.UpdateSnippet(returnedIdFromRepo);
                 _repository.SaveChanges();
 
                 return NoContent();
-                
+
             }
             else
             {
@@ -75,6 +76,33 @@ namespace SnippetsAPI.Controllers
 
         }
 
+        //PATCH api/snippets/{id}
+        [HttpPatch("{id}")]
+        public ActionResult PatchSnippetUpdate(int id, JsonPatchDocument<SnippetUpdateDto> patchDocument)
+        {
+            var returnedIdFromRepo = _repository.GetSnippetById(id);
+            if (returnedIdFromRepo != null)
+            {
+                var snippetToPatch = _mapper.Map<SnippetUpdateDto>(returnedIdFromRepo);
+                patchDocument.ApplyTo(snippetToPatch, ModelState);
+                if (!TryValidateModel(snippetToPatch))
+                {
+                    return ValidationProblem(ModelState);
+                }
+
+                _mapper.Map(snippetToPatch, returnedIdFromRepo);
+                _repository.UpdateSnippet(returnedIdFromRepo);
+                _repository.SaveChanges();
+                return NoContent();
+
+
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
 
     }
 }

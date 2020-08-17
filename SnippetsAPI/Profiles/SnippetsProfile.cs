@@ -13,7 +13,7 @@ namespace SnippetsAPI.Profiles
             CreateMap<Snippet, SnippetReadDto>();
             CreateMap<SnippetCreateDto, Snippet>();
             CreateMap<SnippetUpdateDto, Snippet>();
-
+            CreateMap<Snippet, SnippetUpdateDto>();
         }
 
     }
