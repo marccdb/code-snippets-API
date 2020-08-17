@@ -1,7 +1,7 @@
 ﻿using SnippetsAPI.Models;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace SnippetsAPI.Data
 {
@@ -14,8 +14,15 @@ namespace SnippetsAPI.Data
             _context = context;
         }
 
+        public void CreateSnippet(Snippet snippet)
+        {
+            if (snippet == null)
+            {
+                throw new InvalidDataException("Please insert a valid snippet");
+            }
 
-
+            _context.Snippets.Add(snippet);
+        }
 
         public Snippet GetSnippetById(int id)
         {
@@ -25,6 +32,16 @@ namespace SnippetsAPI.Data
         public IEnumerable<Snippet> GetSnippets()
         {
             return _context.Snippets.ToList();
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
+        }
+
+        public void UpdateSnippet(Snippet snippet)
+        {
+            //Handled by EF
         }
     }
 }

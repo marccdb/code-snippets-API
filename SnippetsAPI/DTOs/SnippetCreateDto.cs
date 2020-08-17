@@ -2,14 +2,16 @@
 
 namespace SnippetsAPI.DTOs
 {
-    public class SnippetReadDto
-    {
-        [Required]
-        public int Id { get; set; }
+    public class SnippetCreateDto { 
+
         [Required]
         public string HowTo { get; set; }
+
         [Required]
         public string Line { get; set; }
+
+        [Required]
+        public string Platform { get; set; }
 
     }
 }

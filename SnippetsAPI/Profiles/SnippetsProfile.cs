@@ -9,7 +9,11 @@ namespace SnippetsAPI.Profiles
 
         public SnippetsProfile()
         {
+            //Source -> Destination
             CreateMap<Snippet, SnippetReadDto>();
+            CreateMap<SnippetCreateDto, Snippet>();
+            CreateMap<SnippetUpdateDto, Snippet>();
+
         }
 
     }

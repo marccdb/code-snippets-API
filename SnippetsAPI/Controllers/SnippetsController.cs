@@ -29,7 +29,7 @@ namespace SnippetsAPI.Controllers
         }
 
         //Get api/snippets/{id}
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetSnippetById")]
         public ActionResult<SnippetReadDto> GetSnippetById(int id)
         {
             var returnedValue = _repository.GetSnippetById(id);
@@ -38,6 +38,41 @@ namespace SnippetsAPI.Controllers
                 return Ok(_mapper.Map<SnippetReadDto>(returnedValue));
             }
             return NotFound();
+        }
+
+        //Post api/snippets
+        [HttpPost]
+        public ActionResult<SnippetReadDto> CreateSnippet(SnippetCreateDto snippetsCreateDto)
+        {
+            var snippetModel = _mapper.Map<Snippet>(snippetsCreateDto);
+            _repository.CreateSnippet(snippetModel);
+            _repository.SaveChanges();
+
+            var snippetsReadDto = _mapper.Map<SnippetReadDto>(snippetModel);
+
+            return CreatedAtRoute(nameof(GetSnippetById), new { Id = snippetsReadDto.Id }, snippetsReadDto);
+
+        }
+
+        // Update-PUT api/snippets/{id}
+        [HttpPut("{id}")]
+        public ActionResult<SnippetUpdateDto> UpdateSnippet(int id, SnippetUpdateDto snippetUpdateDto)
+        {
+            var returnedIdFromRepo = _repository.GetSnippetById(id);
+            if(returnedIdFromRepo != null)
+            {
+                _mapper.Map(snippetUpdateDto, returnedIdFromRepo);
+                _repository.UpdateSnippet(returnedIdFromRepo);
+                _repository.SaveChanges();
+
+                return NoContent();
+                
+            }
+            else
+            {
+                return NotFound();
+            }
+
         }
 
 
